@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AwaazFm - Stories, Chat, and Quizzes for Android</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e7eb;
+            --purple-500: #a855f7;
+            --purple-600: #9333ea;
+            --purple-700: #7e22ce;
+        }
+
+        .bg-black-gradient {
+            background: radial-gradient(circle at top, #1a1a1a 0%, #0a0a0a 70%);
+        }
+
+        .purple-glow {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3), 0 0 15px rgba(168, 85, 247, 0.15);
+        }
+
+        .main-cta {
+            background: linear-gradient(110deg, #a855f7, #7c3aed);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .main-cta:hover {
+            background: linear-gradient(110deg, #c084fc, #8b5cf6);
+            box-shadow: 0 0 25px rgba(192, 132, 252, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .testimonial-card,
+        .feature-image-container {
+            background: rgba(26, 26, 26, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            /* Needed for 3D transforms */
+        }
+
+        .faq-item .faq-answer-wrapper {
+            overflow: hidden;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-black-gradient overflow-x-hidden">
+
+    <!-- Header -->
+    <header
+        class="py-4 px-4 sm:px-6 lg:px-8 w-full z-20 sticky top-0 bg-black/50 backdrop-blur-lg border-b border-gray-800">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl sm:text-3xl font-bold text-white">Awaaz<span class="text-purple-400">Fm</span></h1>
+            <a href="#" class="hidden md:block main-cta text-white font-semibold py-2 px-5 rounded-lg">Get The App</a>
+            <a href="#" class="md:hidden main-cta text-white font-semibold py-2 px-4 rounded-lg text-sm">Get The App</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-20 sm:pb-24">
+        <div id="hero-content">
+            <h2 class="text-center text-4xl sm:text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                Your Universe of <br class="hidden sm:block"> Audio <span class="text-purple-400">Stories</span> Awaits.
+            </h2>
+            <p class="text-center max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 mb-10">
+                Immerse yourself in captivating tales, connect with fellow listeners, and test your knowledge with fun
+                quizzes, all on your Android device.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <a href="#"
+                    class="main-cta text-white font-bold py-3 px-6 sm:py-4 sm:px-8 text-sm sm:text-base rounded-full shadow-lg purple-glow flex items-center gap-3">
+                    <i class="fab fa-google-play text-xl sm:text-2xl"></i>
+                    <span>Get it on Google Play</span>
+                </a>
+                <div
+                    class="hidden sm:flex items-center gap-4 p-3 bg-gray-900 bg-opacity-50 border border-gray-700 rounded-xl backdrop-blur-sm">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://play.google.com/store/apps/details?id=com.awaazfm"
+                        class="rounded-md bg-white p-1" alt="Download AwaazFm on Google Play">
+                    <div class="text-left">
+                        <p class="font-bold text-white">Scan to download</p>
+                        <p class="text-xs text-gray-400">Point your camera and go!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-20 relative flex justify-center items-center" id="phone-mockup-container">
+            <div
+                class="absolute w-[280px] h-[550px] sm:w-[300px] sm:h-[600px] md:w-[400px] md:h-[650px] bg-purple-800/30 blur-3xl rounded-full">
+            </div>
+
+            <!-- Phone Mockup -->
+            <div
+                class="relative mx-auto border-gray-700 bg-gray-800 border-[8px] sm:border-[10px] rounded-[2rem] sm:rounded-[2.5rem] h-[500px] w-[250px] sm:h-[550px] sm:w-[280px] md:h-[650px] md:w-[320px] shadow-2xl">
+                <div
+                    class="w-[100px] h-[18px] sm:w-[120px] sm:h-[20px] bg-gray-800 top-0 rounded-b-lg sm:rounded-b-xl left-1/2 -translate-x-1/2 absolute">
+                </div>
+                <div class="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden w-full h-full bg-[#111111]">
+                    <div id="phone-screen-content" class="p-3 sm:p-4 space-y-3 sm:space-y-4">
+                        <div class="flex justify-between items-center px-2 pt-2">
+                            <h2 class="text-white font-bold text-base sm:text-lg">For You</h2>
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <div class="story-card bg-gray-800/50 p-2 sm:p-3 rounded-lg flex items-center gap-3">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-purple-500 rounded-lg flex-shrink-0"></div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-white text-xs sm:text-sm">The Midnight Signal</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-400">Sci-Fi Thriller</p>
+                                <div class="w-full bg-gray-600 rounded-full h-1.5 mt-2">
+                                    <div class="bg-purple-400 h-1.5 rounded-full" style="width: 45%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="story-card bg-gray-800/50 p-2 sm:p-3 rounded-lg flex items-center gap-3">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-indigo-500 rounded-lg flex-shrink-0"></div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-white text-xs sm:text-sm">Echoes of Yesterday</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-400">Mystery</p>
+                                <div class="w-full bg-gray-600 rounded-full h-1.5 mt-2">
+                                    <div class="bg-purple-400 h-1.5 rounded-full" style="width: 10%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="story-card bg-gray-800/50 p-2 sm:p-3 rounded-lg flex items-center gap-3">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-pink-500 rounded-lg flex-shrink-0"></div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-white text-xs sm:text-sm">Valley of Kings</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-400">Adventure</p>
+                            </div>
+                        </div>
+                        <div class="story-card bg-gray-800/50 p-2 sm:p-3 rounded-lg flex items-center gap-3">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-teal-500 rounded-lg flex-shrink-0"></div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-white text-xs sm:text-sm">Cosmic Drift</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-400">Sci-Fi</p>
+                            </div>
+                        </div>
+                        <div class="story-card bg-gray-800/50 p-2 sm:p-3 rounded-lg flex items-center gap-3">
+                            <div class="w-14 h-14 sm:w-16 sm:h-16 bg-rose-500 rounded-lg flex-shrink-0"></div>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-white text-xs sm:text-sm">Heartstrings</h3>
+                                <p class="text-[10px] sm:text-xs text-gray-400">Romance</p>
+                                <div class="w-full bg-gray-600 rounded-full h-1.5 mt-2">
+                                    <div class="bg-purple-400 h-1.5 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 right-0 bg-black/40 backdrop-blur-md border-t border-gray-700/50 p-3 sm:p-4 flex justify-around items-center rounded-b-[1.2rem] sm:rounded-b-[1.7rem]">
+                        <div class="text-center text-purple-400">
+                            <i class="fas fa-home text-base sm:text-lg md:text-xl"></i>
+                            <p class="text-[9px] sm:text-[10px] font-medium">Home</p>
+                        </div>
+                        <div class="text-center text-gray-400 hover:text-white transition">
+                            <i class="fas fa-comments text-base sm:text-lg md:text-xl"></i>
+                            <p class="text-[9px] sm:text-[10px] font-medium">Chats</p>
+                        </div>
+                        <div class="text-center text-gray-400 hover:text-white transition">
+                            <i class="fas fa-question-circle text-base sm:text-lg md:text-xl"></i>
+                            <p class="text-[9px] sm:text-[10px] font-medium">Quizzes</p>
+                        </div>
+                        <div class="text-center text-gray-400 hover:text-white transition">
+                            <i class="fas fa-user text-base sm:text-lg md:text-xl"></i>
+                            <p class="text-[9px] sm:text-[10px] font-medium">Profile</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Top Stories Section -->
+    <section id="top-stories" class="py-20 sm:py-24 bg-black">
+        <div class="container mx-auto">
+            <div class="flex justify-between items-center mb-8 sm:mb-12 px-4 sm:px-6 lg:px-8">
+                <div>
+                    <h3 class="text-3xl sm:text-4xl font-bold text-white mb-2">Trending Now</h3>
+                    <p class="text-gray-400 text-base sm:text-lg">Discover the stories everyone is talking about.</p>
+                </div>
+            </div>
+            <!-- Carousel Container -->
+            <div id="stories-marquee" class="relative flex overflow-hidden -mx-4 sm:-mx-6 lg:-mx-8 cursor-pointer">
+                <div id="stories-carousel" class="flex items-start gap-4 sm:gap-6 pb-4 px-2 sm:px-3 lg:px-4">
+                    <a href="detailpage.html" class="block">
+                        <div class="story-item flex-shrink-0 w-40 sm:w-48 lg:w-56">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/736x/8f/5b/ed/8f5bed061f510732c975dbd09368c5ef.jpg"
+                                    alt="Sci-Fi Anime Poster"
+                                    class="rounded-lg mb-2 w-full h-auto aspect-[2/3] object-cover transition-transform">
+                            </div>
+                            <h5 class="font-bold text-white text-sm sm:text-base truncate">Cyber Dreams</h5>
+                            <p class="text-gray-400 text-xs sm:text-sm">Sci-Fi</p>
+                        </div>
+                    </a>
+                    <a href="detailpage.html" class="block">
+                        <div class="story-item flex-shrink-0 w-40 sm:w-48 lg:w-56">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/736x/2f/1e/bc/2f1ebc78cb54f790f0800d7702501827.jpg"
+                                    alt="Mystery Anime Poster"
+                                    class="rounded-lg mb-2 w-full h-auto aspect-[2/3] object-cover transition-transform">
+                            </div>
+                            <h5 class="font-bold text-white text-sm sm:text-base truncate">Shadow's Inquiry</h5>
+                            <p class="text-gray-400 text-xs sm:text-sm">Mystery</p>
+                        </div>
+                    </a>
+                    <a href="detailpage.html" class="block">
+                        <div class="story-item flex-shrink-0 w-40 sm:w-48 lg:w-56">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/736x/77/9c/1c/779c1c4d5d119a70400428828cfb1eb6.jpg"
+                                    alt="Romance Anime Poster"
+                                    class="rounded-lg mb-2 w-full h-auto aspect-[2/3] object-cover transition-transform">
+                            </div>
+                            <h5 class="font-bold text-white text-sm sm:text-base truncate">Sakura's Promise</h5>
+                            <p class="text-gray-400 text-xs sm:text-sm">Romance</p>
+                        </div>
+                    </a>
+                    <a href="detailpage.html" class="block">
+                        <div class="story-item flex-shrink-0 w-40 sm:w-48 lg:w-56">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/736x/f8/dc/23/f8dc2399e-9-d313182309178aca76ef4b.jpg"
+                                    alt="Fantasy Anime Poster"
+                                    class="rounded-lg mb-2 w-full h-auto aspect-[2/3] object-cover transition-transform">
+                            </div>
+                            <h5 class="font-bold text-white text-sm sm:text-base truncate">Blade of the Ancients</h5>
+                            <p class="text-gray-400 text-xs sm:text-sm">Fantasy</p>
+                        </div>
+                    </a>
+                    <a href="detailpage.html" class="block">
+                        <div class="story-item flex-shrink-0 w-40 sm:w-48 lg:w-56">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/736x/5b/a1/04/5ba10471722e62cbcee770a25af3544a.jpg"
+                                    alt="Adventure Anime Poster"
+                                    class="rounded-lg mb-2 w-full h-auto aspect-[2/3] object-cover transition-transform">
+                            </div>
+                            <h5 class="font-bold text-white text-sm sm:text-base truncate">Journey to the Sky Islands
+                            </h5>
+                            <p class="text-gray-400 text-xs sm:text-sm">Adventure</p>
+                        </div>
+                    </a>
+                    <a href="detailpage.html" class="block">
+                        <div class="story-item flex-shrink-0 w-40 sm:w-48 lg:w-56">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/1200x/c8/c6/fc/c8c6fc4daf2d7e43ba1a6457c12759fe.jpg"
+                                    alt="Thriller Anime Poster"
+                                    class="rounded-lg mb-2 w-full h-auto aspect-[2/3] object-cover transition-transform">
+                            </div>
+                            <h5 class="font-bold text-white text-sm sm:text-base truncate">The Red Gaze</h5>
+                            <p class="text-gray-400 text-xs sm:text-sm">Thriller</p>
+                        </div>
+                    </a>
+                    <a href="detailpage.html" class="block">
+                        <div class="story-item flex-shrink-0 w-40 sm:w-48 lg:w-56">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/736x/37/dd/08/37dd08e2fe39495c587601684f2cb15e.jpg"
+                                    alt="Comedy Anime Poster"
+                                    class="rounded-lg mb-2 w-full h-auto aspect-[2/3] object-cover transition-transform">
+                            </div>
+                            <h5 class="font-bold text-white text-sm sm:text-base truncate">Class Clown Chronicles</h5>
+                            <p class="text-gray-400 text-xs sm:text-sm">Comedy</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <section id="features" class="py-20 sm:py-24">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h3 class="text-3xl sm:text-4xl font-bold text-white mb-4 animate-on-scroll">Everything You Need
+                            for the Perfect Escape</h3>
+                        <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto animate-on-scroll">We've packed
+                            AwaazFm with features to make your listening experience unforgettable.</p>
+                    </div>
+                    <!-- Feature 1 -->
+                    <div
+                        class="feature-section flex flex-col-reverse md:flex-row items-center gap-8 sm:gap-12 mb-16 sm:mb-20">
+                        <div class="md:w-1/2 animate-on-scroll">
+                            <h4 class="text-2xl sm:text-3xl font-bold text-white mb-4">A Library That Never Ends</h4>
+                            <p class="text-gray-400 text-base sm:text-lg mb-6">Explore thousands of hours of content
+                                across every imaginable genre. With new stories added daily, you'll never run out of
+                                things to listen to.</p>
+                            <ul class="space-y-3 text-sm sm:text-base">
+                                <li class="flex items-center gap-3"><i
+                                        class="fas fa-check-circle text-purple-400"></i><span>Personalized
+                                        Recommendations</span></li>
+                                <li class="flex items-center gap-3"><i
+                                        class="fas fa-check-circle text-purple-400"></i><span>Curated Playlists</span>
+                                </li>
+                                <li class="flex items-center gap-3"><i
+                                        class="fas fa-check-circle text-purple-400"></i><span>Offline Downloads</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="md:w-1/2 animate-on-scroll feature-image-container rounded-2xl">
+                            <img src="https://i.pinimg.com/1200x/f1/5e/9d/f15e9db9fb2726e968f7831964cd5390.jpg"
+                                alt="A vast library of books" class="rounded-2xl shadow-lg w-full">
+                        </div>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="feature-section flex flex-col-reverse md:flex-row-reverse items-center gap-8 sm:gap-12">
+                        <div class="md:w-1/2 animate-on-scroll">
+                            <h4 class="text-2xl sm:text-3xl font-bold text-white mb-4">More Than Just Listening</h4>
+                            <p class="text-gray-400 text-base sm:text-lg mb-6">AwaazFm is an interactive experience.
+                                Dive into the story, then dive into the conversation. Share your theories, react to plot
+                                twists, and make new friends.</p>
+                            <ul class="space-y-3 text-sm sm:text-base">
+                                <li class="flex items-center gap-3"><i
+                                        class="fas fa-check-circle text-purple-400"></i><span>Real-time Chat
+                                        Rooms</span></li>
+                                <li class="flex items-center gap-3"><i
+                                        class="fas fa-check-circle text-purple-400"></i><span>Spoiler-tagged
+                                        Messages</span></li>
+                                <li class="flex items-center gap-3"><i
+                                        class="fas fa-check-circle text-purple-400"></i><span>Leaderboards &
+                                        Badges</span></li>
+                            </ul>
+                        </div>
+                        <div class="md:w-1/2 animate-on-scroll feature-image-container rounded-2xl">
+                            <img src="https://i.pinimg.com/1200x/5e/a5/bf/5ea5bffb9875a91ae319c9f97b1db65a.jpg"
+                                alt="People chatting and connecting" class="rounded-2xl shadow-lg w-full">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How it works -->
+            <section id="how-it-works" class="py-20 sm:py-24 bg-black">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h3 class="text-3xl sm:text-4xl font-bold text-white mb-4 animate-on-scroll">Get Started in
+                            Seconds</h3>
+                        <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto animate-on-scroll">Your next
+                            audio adventure is just three steps away.</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-10 sm:gap-8 text-center relative">
+                        <div class="hidden md:block absolute top-12 left-0 right-0 w-full h-px">
+                            <svg width="100%" height="2" class="overflow-visible">
+                                <path id="how-it-works-line" d="M 17% 1 L 83% 1" stroke="#4C1D95" stroke-width="2"
+                                    fill="none" />
+                            </svg>
+                        </div>
+
+                        <div class="flex flex-col items-center z-10 animate-on-scroll">
+                            <div
+                                class="bg-purple-600/20 border-2 border-purple-500 text-purple-300 w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center text-3xl sm:text-4xl font-bold mb-4">
+                                1</div>
+                            <h4 class="text-lg sm:text-xl font-bold text-white mb-2">Discover</h4>
+                            <p class="text-gray-400 text-sm sm:text-base">Download the app and browse our massive
+                                library of audio stories.</p>
+                        </div>
+                        <div class="flex flex-col items-center z-10 animate-on-scroll">
+                            <div
+                                class="bg-purple-600/20 border-2 border-purple-500 text-purple-300 w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center text-3xl sm:text-4xl font-bold mb-4">
+                                2</div>
+                            <h4 class="text-lg sm:text-xl font-bold text-white mb-2">Engage</h4>
+                            <p class="text-gray-400 text-sm sm:text-base">Join chat rooms to discuss episodes and
+                                connect with the community.</p>
+                        </div>
+                        <div class="flex flex-col items-center z-10 animate-on-scroll">
+                            <div
+                                class="bg-purple-600/20 border-2 border-purple-500 text-purple-300 w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center text-3xl sm:text-4xl font-bold mb-4">
+                                3</div>
+                            <h4 class="text-lg sm:text-xl font-bold text-white mb-2">Compete</h4>
+                            <p class="text-gray-400 text-sm sm:text-base">Take fun quizzes to test your knowledge and
+                                climb the leaderboards.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section id="stats-section" class="py-20 sm:py-24">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h3 class="text-3xl sm:text-4xl font-bold text-white animate-on-scroll">AwaazFm by the Numbers
+                        </h3>
+                        <p class="text-gray-400 text-base sm:text-lg animate-on-scroll">Our community is the heart of
+                            everything we do.</p>
+                    </div>
+                    <div class="grid grid-cols-1 gap-8 lg:hidden">
+                        <div
+                            class="p-6 bg-gray-900/50 border border-purple-500/20 rounded-2xl shadow-lg flex items-center gap-6 text-left animate-on-scroll">
+                            <i class="fas fa-headphones-alt text-5xl text-purple-400 w-1/4"></i>
+                            <div>
+                                <p class="text-4xl font-extrabold text-white mb-1" data-target="1000000">0</p>
+                                <p class="text-base text-gray-300">Stories Listened</p>
+                            </div>
+                        </div>
+                        <div
+                            class="p-6 bg-gray-900/50 border border-purple-500/20 rounded-2xl shadow-lg flex items-center gap-6 text-left animate-on-scroll">
+                            <i class="fas fa-users text-5xl text-purple-400 w-1/4"></i>
+                            <div>
+                                <p class="text-4xl font-extrabold text-white mb-1" data-target="500000">0</p>
+                                <p class="text-base text-gray-300">Active Users</p>
+                            </div>
+                        </div>
+                        <div
+                            class="p-6 bg-gray-900/50 border border-purple-500/20 rounded-2xl shadow-lg flex items-center gap-6 text-left animate-on-scroll">
+                            <i class="fas fa-star text-5xl text-purple-400 w-1/4"></i>
+                            <div>
+                                <p class="text-4xl font-extrabold text-white mb-1" data-target="4.9">0</p>
+                                <p class="text-base text-gray-300">Play Store Rating</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden lg:grid grid-cols-3 grid-rows-2 gap-8 h-[500px]">
+                        <div
+                            class="col-span-1 row-span-2 p-8 bg-gray-900/50 border border-purple-500/20 rounded-2xl shadow-lg flex flex-col justify-center text-center animate-on-scroll">
+                            <i class="fas fa-headphones-alt text-8xl text-purple-400 mb-4"></i>
+                            <p class="text-7xl font-extrabold text-white mb-2" data-target="1000000">0</p>
+                            <p class="text-xl text-gray-300">Stories Listened</p>
+                        </div>
+                        <div
+                            class="col-span-1 row-span-1 p-8 bg-gray-900/50 border border-purple-500/20 rounded-2xl shadow-lg text-center animate-on-scroll">
+                            <i class="fas fa-users text-7xl text-purple-400 mb-2"></i>
+                            <p class="text-6xl font-extrabold text-white" data-target="500000">0</p>
+                            <p class="text-lg text-gray-300">Active Users</p>
+                        </div>
+                        <div
+                            class="col-span-1 row-span-2 p-8 bg-gray-900/50 border border-purple-500/20 rounded-2xl shadow-lg flex flex-col justify-center text-center animate-on-scroll">
+                            <i class="fas fa-star text-8xl text-purple-400 mb-4"></i>
+                            <p class="text-7xl font-extrabold text-white mb-2" data-target="4.9">0</p>
+                            <p class="text-xl text-gray-300">Play Store Rating</p>
+                        </div>
+                        <div
+                            class="col-span-1 row-span-1 p-8 bg-gray-900/50 border border-purple-500/20 rounded-2xl shadow-lg flex flex-col justify-center text-center animate-on-scroll">
+                            <i class="fas fa-layer-group text-7xl text-purple-400 mb-2"></i>
+                            <p class="text-6xl font-extrabold text-white">100+</p>
+                            <p class="text-lg text-gray-300">Genres & Categories</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="py-20 sm:py-24 bg-black">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h3 class="text-3xl sm:text-4xl font-bold text-white mb-4 animate-on-scroll">What Our Listeners
+                            Say</h3>
+                        <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto animate-on-scroll">We're building
+                            a community, and we're proud of what they have to say.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
+                        <div class="testimonial-card p-6 sm:p-8 rounded-2xl animate-on-scroll">
+                            <p class="text-gray-300 text-base sm:text-lg italic mb-6">"AwaazFm has completely changed my
+                                commute. The stories are so immersive, and I love discussing them in the chat. It feels
+                                like a real community!"</p>
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User Avatar"
+                                    class="w-12 h-12 rounded-full mr-4 border-2 border-purple-400">
+                                <div>
+                                    <p class="font-bold text-white text-sm sm:text-base">Anjali K.</p>
+                                    <p class="text-purple-400 text-xs sm:text-sm">Podcast Enthusiast</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-card p-6 sm:p-8 rounded-2xl animate-on-scroll">
+                            <p class="text-gray-300 text-base sm:text-lg italic mb-6">"The quizzes are my favorite part!
+                                It's such a fun way to engage with the stories I love. I'm on the leaderboard every week
+                                trying to beat my friends."</p>
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Avatar"
+                                    class="w-12 h-12 rounded-full mr-4 border-2 border-purple-400">
+                                <div>
+                                    <p class="font-bold text-white text-sm sm:text-base">Rohan S.</p>
+                                    <p class="text-purple-400 text-xs sm:text-sm">Quiz Master</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section id="faq" class="py-20 sm:py-24">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h3 class="text-3xl sm:text-4xl font-bold text-white mb-4 animate-on-scroll">Frequently Asked
+                            Questions</h3>
+                        <p class="text-gray-400 text-base sm:text-lg animate-on-scroll">Have questions? We've got
+                            answers.</p>
+                    </div>
+                    <div class="space-y-4" id="faq-container">
+                        <div class="faq-item border border-gray-800 rounded-lg overflow-hidden animate-on-scroll">
+                            <div class="faq-question flex justify-between items-center p-5 sm:p-6 cursor-pointer">
+                                <h5 class="text-base sm:text-lg font-semibold text-white">Is AwaazFm free to use?</h5>
+                                <i class="fas fa-plus faq-icon text-purple-400"></i>
+                            </div>
+                            <div class="faq-answer-wrapper">
+                                <div class="faq-answer px-5 sm:px-6 pb-5 pt-0 text-gray-400 text-sm sm:text-base">
+                                    <p>Yes! The core features of AwaazFm, including listening to stories, chatting, and
+                                        taking quizzes, are completely free. We may introduce optional premium features
+                                        in the future.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item border border-gray-800 rounded-lg overflow-hidden animate-on-scroll">
+                            <div class="faq-question flex justify-between items-center p-5 sm:p-6 cursor-pointer">
+                                <h5 class="text-base sm:text-lg font-semibold text-white">Can I listen to stories
+                                    offline?</h5>
+                                <i class="fas fa-plus faq-icon text-purple-400"></i>
+                            </div>
+                            <div class="faq-answer-wrapper">
+                                <div class="faq-answer px-5 sm:px-6 pb-5 pt-0 text-gray-400 text-sm sm:text-base">
+                                    <p>Absolutely! You can download your favorite stories and listen to them anywhere,
+                                        anytime, without needing an internet connection.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="faq-item border border-gray-800 rounded-lg overflow-hidden animate-on-scroll">
+                            <div class="faq-question flex justify-between items-center p-5 sm:p-6 cursor-pointer">
+                                <h5 class="text-base sm:text-lg font-semibold text-white">What kind of stories are
+                                    available?</h5>
+                                <i class="fas fa-plus faq-icon text-purple-400"></i>
+                            </div>
+                            <div class="faq-answer-wrapper">
+                                <div class="faq-answer px-5 sm:px-6 pb-5 pt-0 text-gray-400 text-sm sm:text-base">
+                                    <p>We have a wide range of genres including sci-fi, fantasy, mystery, thriller,
+                                        romance, comedy, and more. Our library is constantly expanding with new and
+                                        exclusive content.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action Section -->
+            <section class="py-20 sm:py-24 bg-black">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h3 class="text-3xl sm:text-5xl font-extrabold text-white mb-4 animate-on-scroll">Start Your Audio
+                        Adventure Today</h3>
+                    <p class="text-gray-400 text-base sm:text-lg mb-8 max-w-xl mx-auto animate-on-scroll">Download
+                        AwaazFm from the Google Play Store and join a community of millions of listeners.</p>
+                    <a href="#"
+                        class="main-cta text-white font-bold py-3 px-8 sm:py-4 sm:px-10 rounded-full shadow-lg purple-glow text-base sm:text-lg inline-flex items-center gap-3 animate-on-scroll">
+                        <i class="fab fa-google-play text-xl sm:text-2xl"></i>
+                        <span>Download For Free</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer id="contact" class="py-16">
+                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div class="col-span-2 md:col-span-1">
+                            <h4 class="text-2xl font-bold text-white mb-4">Awaaz<span class="text-purple-400">Fm</span>
+                            </h4>
+                            <p class="text-gray-500">Your universe of audio stories.</p>
+                            <div class="flex space-x-4 mt-4">
+                                <a href="#" class="text-gray-400 hover:text-white"><i
+                                        class="fab fa-twitter text-xl"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-white"><i
+                                        class="fab fa-instagram text-xl"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-white"><i
+                                        class="fab fa-facebook text-xl"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-sm">
+                            <h5 class="text-white font-semibold mb-4 tracking-wider">Product</h5>
+                            <ul class="space-y-3">
+                                <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Updates</a></li>
+                            </ul>
+                        </div>
+                        <div class="text-sm">
+                            <h5 class="text-white font-semibold mb-4 tracking-wider">Company</h5>
+                            <ul class="space-y-3">
+                                <li><a href="#about" class="text-gray-400 hover:text-white">About Us</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="text-sm">
+                            <h5 class="text-white font-semibold mb-4 tracking-wider">Legal</h5>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                                <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                        <p>&copy; 2024 AwaazFm. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- GSAP Scripts -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    // --- MOUSE FOLLOWER GLOW ---
+                    const glow = document.createElement('div');
+                    glow.style.position = 'fixed';
+                    glow.style.width = '400px';
+                    glow.style.height = '400px';
+                    glow.style.background = 'rgba(168, 85, 247, 0.15)';
+                    glow.style.borderRadius = '50%';
+                    glow.style.filter = 'blur(100px)';
+                    glow.style.pointerEvents = 'none';
+                    glow.style.zIndex = '-1';
+                    glow.style.transform = 'translate(-50%, -50%)';
+                    document.body.appendChild(glow);
+
+                    window.addEventListener('mousemove', (e) => {
+                        gsap.to(glow, { x: e.clientX, y: e.clientY, duration: 1, ease: 'power3.out' });
+                    });
+
+                    // --- HERO ANIMATION ---
+                    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+                    heroTl.from('#hero-content > *', { opacity: 0, y: 30, stagger: 0.2, duration: 1 })
+                        .from('#phone-mockup-container', { opacity: 0, y: 50, scale: 0.95, duration: 1.2 }, "-=0.8")
+                        .from('.story-card', { opacity: 0, x: -30, stagger: 0.2, duration: 0.8 }, "-=0.8");
+
+                    // --- PHONE MOCKUP SCROLL SIMULATION ---
+                    gsap.to('#phone-screen-content', {
+                        y: '-25%',
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: 'main',
+                            start: 'top top',
+                            end: 'bottom bottom',
+                            scrub: true
+                        }
+                    });
+
+                    // --- TRENDING STORIES MARQUEE ---
+                    const storiesCarousel = document.getElementById('stories-carousel');
+                    const storyItems = Array.from(storiesCarousel.children);
+                    storyItems.forEach(item => {
+                        storiesCarousel.appendChild(item.cloneNode(true));
+                    });
+                    const marqueeTween = gsap.to("#stories-carousel", {
+                        xPercent: -50, ease: "none", duration: 40, repeat: -1,
+                    });
+                    document.querySelectorAll('.story-item').forEach(item => {
+                        item.addEventListener('mouseenter', () => {
+                            gsap.to(item.querySelector('img'), { scale: 1.05, duration: 0.3 });
+                            gsap.to(marqueeTween, { timeScale: 0.2, duration: 0.5 });
+                        });
+                        item.addEventListener('mouseleave', () => {
+                            gsap.to(item.querySelector('img'), { scale: 1, duration: 0.3 });
+                            gsap.to(marqueeTween, { timeScale: 1, duration: 0.5 });
+                        });
+                    });
+
+                    // --- 3D TILT EFFECT ---
+                    const tiltElements = document.querySelectorAll('.testimonial-card, .feature-image-container');
+                    tiltElements.forEach(elem => {
+                        elem.addEventListener('mousemove', (e) => {
+                            const rect = elem.getBoundingClientRect();
+                            const x = e.clientX - rect.left;
+                            const y = e.clientY - rect.top;
+                            const centerX = rect.width / 2;
+                            const centerY = rect.height / 2;
+                            const rotateX = ((y - centerY) / centerY) * -8;
+                            const rotateY = ((x - centerX) / centerX) * 8;
+                            gsap.to(elem, {
+                                rotationX: rotateX, rotationY: rotateY, scale: 1.03,
+                                transformPerspective: 1000, ease: 'power1.out', duration: 0.5
+                            });
+                        });
+                        elem.addEventListener('mouseleave', () => {
+                            gsap.to(elem, {
+                                rotationX: 0, rotationY: 0, scale: 1,
+                                ease: 'elastic.out(1, 0.5)', duration: 1.2
+                            });
+                        });
+                    });
+
+                    // --- GENERAL SCROLL-TRIGGERED ANIMATIONS ---
+                    gsap.utils.toArray('.animate-on-scroll').forEach(elem => {
+                        gsap.from(elem, {
+                            opacity: 0, y: 50, duration: 1, ease: 'power3.out',
+                            scrollTrigger: { trigger: elem, start: 'top 85%', toggleActions: 'play none none none' }
+                        });
+                    });
+
+                    // --- STAGGERED LISTS IN FEATURES ---
+                    gsap.utils.toArray('.feature-section').forEach(section => {
+                        gsap.from(section.querySelectorAll('li'), {
+                            opacity: 0, x: -30, stagger: 0.2, duration: 0.8, ease: 'power3.out',
+                            scrollTrigger: { trigger: section.querySelector('ul'), start: 'top 90%', toggleActions: 'play none none none' }
+                        });
+                    });
+
+                    // --- "HOW IT WORKS" LINE ANIMATION ---
+                    const line = document.querySelector("#how-it-works-line");
+                    if (line) {
+                        gsap.set(line, { strokeDasharray: line.getTotalLength(), strokeDashoffset: line.getTotalLength() });
+                        gsap.to(line, {
+                            strokeDashoffset: 0, duration: 2, ease: 'power1.inOut',
+                            scrollTrigger: { trigger: "#how-it-works", start: "top 70%", toggleActions: "play none none none" }
+                        });
+                    }
+
+                    // --- STATS COUNTER ANIMATION ---
+                    gsap.utils.toArray('[data-target]').forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const isFloat = target % 1 !== 0;
+                        ScrollTrigger.create({
+                            trigger: counter, start: 'top 90%', once: true,
+                            onEnter: () => {
+                                gsap.fromTo(counter, { innerText: 0 }, {
+                                    innerText: target, duration: 2, ease: 'power2.out', snap: { innerText: 1 },
+                                    onUpdate: function () { counter.innerText = isFloat ? parseFloat(this.targets()[0].innerText).toFixed(1) : Math.ceil(this.targets()[0].innerText).toLocaleString(); },
+                                    onComplete: () => {
+                                        if (counter.getAttribute('data-target') === '1000000' || counter.getAttribute('data-target') === '500000') {
+                                            counter.innerText = target.toLocaleString() + '+';
+                                        } else { counter.innerText = isFloat ? target.toFixed(1) : target.toLocaleString(); }
+                                    }
+                                });
+                            }
+                        });
+                    });
+
+                    // --- GSAP FAQ ACCORDION ---
+                    gsap.utils.toArray('.faq-item').forEach(item => {
+                        const question = item.querySelector('.faq-question');
+                        const answerWrapper = item.querySelector('.faq-answer-wrapper');
+                        gsap.set(answerWrapper, { height: 0, autoAlpha: 0 });
+                        question.addEventListener('click', () => {
+                            const isOpen = item.classList.contains('open');
+                            gsap.to(item.querySelector('.faq-icon'), { rotate: isOpen ? 0 : 45, duration: 0.3 });
+                            if (!isOpen) {
+                                item.classList.add('open');
+                                gsap.to(answerWrapper, { height: 'auto', autoAlpha: 1, duration: 0.5, ease: 'expo.inOut' });
+                            } else {
+                                item.classList.remove('open');
+                                gsap.to(answerWrapper, { height: 0, autoAlpha: 0, duration: 0.4, ease: 'power2.inOut' });
+                            }
+                        });
+                    });
+
+                    // --- FOOTER ANIMATION ---
+                    gsap.from('footer .grid > div', {
+                        opacity: 0, y: 30, stagger: 0.2, duration: 1, ease: 'power3.out',
+                        scrollTrigger: { trigger: 'footer', start: 'top 95%' }
+                    });
+                });
+            </script>
+</body>
+
+</html>
