@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-g">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Marketing - Crafting Tomorrow's Enterprises</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- NEW: Load GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Load Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- UPDATED: Load Inter (body) and Playfair Display (headings) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;88;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* NEW: Class for serif headings from PDF */
+        .font-serif-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .logo-text {
+            font-weight: 300;
+            font-size: 1.75rem; /* 28px */
+            letter-spacing: 0.1em; /* Wide tracking */
+            text-transform: uppercase;
+        }
+        @media (min-width: 768px) {
+            .logo-text {
+                font-size: 2rem; /* 32px */
+            }
+        }
+
+        /* REQUIRED for GSAP flip animation */
+        .service-card-inner {
+            transform-style: preserve-3d;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .service-card-front,
+        .service-card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .service-card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-700">
+
+    <!-- 
+      Header & Navigation 
+    -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 p-4 md:p-6 transition-all duration-300 text-white">
+        <!-- BG Color div for GSAP to animate -->
+        <!-- UPDATED: Added z-10 -->
+        <div id="header-bg" class="absolute inset-0 bg-white opacity-0 shadow-lg z-10"></div>
+        
+        <!-- UPDATED: Changed z-10 to z-20 -->
+        <div class="container mx-auto flex justify-between items-center px-4 relative z-20">
+            <!-- Logo - Toggles between white and dark versions -->
+            <a href="#" class="flex items-center gap-3">
+                <!-- White Logo (Default) -->
+                <div id="logo-white" class="flex items-center gap-3">
+                    <svg class="w-8 h-8 md:w-9 md:h-9" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.76C12.94 4.14 13.79 5.62 14.38 7.31C15.02 9.11 15.3 11.06 15.18 13.06C14.95 15.21 14.1 17.2 12.8 18.74C12.57 19.01 12.29 19.26 12 19.5C11.71 19.26 11.43 19.01 11.2 18.74C9.9 17.2 9.05 15.21 8.82 13.06C8.7 11.06 8.98 9.11 9.62 7.31C10.21 5.62 11.06 4.14 12 2.76M12 1C9.6 3.69 8.22 7.21 8.02 11.06C7.81 15.14 9.07 19.06 11.4 21.72C11.58 21.92 11.79 22.1 12 22.28C12.21 22.1 12.42 21.92 12.6 21.72C14.93 19.06 16.19 15.14 15.98 11.06C15.78 7.21 14.4 3.69 12 1Z" fill="white"/>
+                        <path d="M4.31 10.22C6.08 10.9 7.6 12.06 8.7 13.56C8.89 13.82 9.07 14.07 9.25 14.31C8.3 15.35 7.1 16.14 5.76 16.57C3.99 17.03 2.11 17.06 0.34 16.65C0.11 16.6 -0.01 16.34 0 16.1C0.21 14.28 1.13 12.58 2.58 11.3C3.07 10.86 3.65 10.5 4.31 10.22Z" fill="white"/>
+                        <path d="M19.69 10.22C17.92 10.9 16.4 12.06 15.3 13.56C15.11 13.82 14.93 14.07 14.75 14.31C15.7 15.35 16.9 16.14 18.24 16.57C20.01 17.03 21.89 17.06 23.66 16.65C23.89 16.6 24.01 16.34 24 16.1C23.79 14.28 22.87 12.58 21.42 11.3C20.93 10.86 20.35 10.5 19.69 10.22Z" fill="white"/>
+                    </svg>
+                    <span class="logo-text">GENESIS</span>
+                </div>
+                <!-- Dark Logo (On Scroll) -->
+                <div id="logo-dark" class="absolute top-0 left-0 flex items-center gap-3 opacity-0">
+                    <svg class="w-8 h-8 md:w-9 md:h-9" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.76C12.94 4.14 13.79 5.62 14.38 7.31C15.02 9.11 15.3 11.06 15.18 13.06C14.95 15.21 14.1 17.2 12.8 18.74C12.57 19.01 12.29 19.26 12 19.5C11.71 19.26 11.43 19.01 11.2 18.74C9.9 17.2 9.05 15.21 8.82 13.06C8.7 11.06 8.98 9.11 9.62 7.31C10.21 5.62 11.06 4.14 12 2.76M12 1C9.6 3.69 8.22 7.21 8.02 11.06C7.81 15.14 9.07 19.06 11.4 21.72C11.58 21.92 11.79 22.1 12 22.28C12.21 22.1 12.42 21.92 12.6 21.72C14.93 19.06 16.19 15.14 15.98 11.06C15.78 7.21 14.4 3.69 12 1Z" fill="#1f2937"/>
+                        <path d="M4.31 10.22C6.08 10.9 7.6 12.06 8.7 13.56C8.89 13.82 9.07 14.07 9.25 14.31C8.3 15.35 7.1 16.14 5.76 16.57C3.99 17.03 2.11 17.06 0.34 16.65C0.11 16.6 -0.01 16.34 0 16.1C0.21 14.28 1.13 12.58 2.58 11.3C3.07 10.86 3.65 10.5 4.31 10.22Z" fill="#1f2937"/>
+                        <path d="M19.69 10.22C17.92 10.9 16.4 12.06 15.3 13.56C15.11 13.82 14.93 14.07 14.75 14.31C15.7 15.35 16.9 16.14 18.24 16.57C20.01 17.03 21.89 17.06 23.66 16.65C23.89 16.6 24.01 16.34 24 16.1C23.79 14.28 22.87 12.58 21.42 11.3C20.93 10.86 20.35 10.5 19.69 10.22Z" fill="#1f2937"/>
+                    </svg>
+                    <span class="logo-text text-gray-900">GENESIS</span>
+                </div>
+            </a>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex items-center space-x-6">
+                <div id="nav-links" class="space-x-6">
+                    <a href="#services" class="text-gray-300 hover:text-white transition duration-300 font-medium">Services</a>
+                    <a href="#portfolio" class="text-gray-300 hover:text-white transition duration-300 font-medium">Portfolio</a>
+                    <a href="#process" class="text-gray-300 hover:text-white transition duration-300 font-medium">Process</a>
+                </div>
+                <a id="nav-contact-btn" href="#contact" class="text-white bg-gray-800 hover:bg-white hover:text-gray-900 border border-white transition duration-300 font-medium py-3 px-6 rounded-lg">
+                    Contact Us
+                </a>
+            </nav>
+            
+            <!-- Mobile Menu Button - MOVED and given new classes -->
+        </div>
+        
+        <!-- MOVED from inside container. ADDED positioning and new z-50 -->
+        <button id="mobile-menu-btn" class="md:hidden text-white absolute top-4 right-4 md:top-6 md:right-6 z-50">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+
+        <!-- Mobile Menu (GSAP will animate this) -->
+        <!-- *** FIX: Reverted h-1/2 back to h-screen to ensure all links fit *** -->
+        <div id="mobile-menu" class="md:hidden absolute top-0 left-0 right-0 bg-white shadow-lg p-6 pt-20 h-screen z-40 overflow-y-auto">
+            <!-- *** NEW: Added logo to mobile menu *** -->
+            <a href="#" class="absolute top-4 left-6 flex items-center gap-3">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.76C12.94 4.14 13.79 5.62 14.38 7.31C15.02 9.11 15.3 11.06 15.18 13.06C14.95 15.21 14.1 17.2 12.8 18.74C12.57 19.01 12.29 19.26 12 19.5C11.71 19.26 11.43 19.01 11.2 18.74C9.9 17.2 9.05 15.21 8.82 13.06C8.7 11.06 8.98 9.11 9.62 7.31C10.21 5.62 11.06 4.14 12 2.76M12 1C9.6 3.69 8.22 7.21 8.02 11.06C7.81 15.14 9.07 19.06 11.4 21.72C11.58 21.92 11.79 22.1 12 22.28C12.21 22.1 12.42 21.92 12.6 21.72C14.93 19.06 16.19 15.14 15.98 11.06C15.78 7.21 14.4 3.69 12 1Z" fill="#1f2937"/>
+                    <path d="M4.31 10.22C6.08 10.9 7.6 12.06 8.7 13.56C8.89 13.82 9.07 14.07 9.25 14.31C8.3 15.35 7.1 16.14 5.76 16.57C3.99 17.03 2.11 17.06 0.34 16.65C0.11 16.6 -0.01 16.34 0 16.1C0.21 14.28 1.13 12.58 2.58 11.3C3.07 10.86 3.65 10.5 4.31 10.22Z" fill="#1f2937"/>
+                    <path d="M19.69 10.22C17.92 10.9 16.4 12.06 15.3 13.56C15.11 13.82 14.93 14.07 14.75 14.31C15.7 15.35 16.9 16.14 18.24 16.57C20.01 17.03 21.89 17.06 23.66 16.65C23.89 16.6 24.01 16.34 24 16.1C23.79 14.28 22.87 12.58 21.42 11.3C20.93 10.86 20.35 10.5 19.69 10.22Z" fill="#1f2937"/>
+                </svg>
+                <span class="logo-text text-gray-900">GENESIS</span>
+            </a>
+            <!-- *** End of new logo *** -->
+            
+            <nav class="flex flex-col space-y-4">
+                <a href="#services" class="mobile-menu-link text-gray-700 hover:text-gray-600 transition duration-300 text-lg">Services</a>
+                <a href="#portfolio" class="mobile-menu-link text-gray-700 hover:text-gray-600 transition duration-300 text-lg">Portfolio</a>
+                <a href="#process" class="mobile-menu-link text-gray-700 hover:text-gray-600 transition duration-300 text-lg">Process</a>
+                <a href="#contact" class="mobile-menu-link bg-gray-600 text-white hover:bg-gray-700 text-center transition duration-300 font-medium py-3 px-6 rounded-lg text-lg">
+                    Contact Us
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="relative h-screen flex items-center justify-center text-center bg-gray-900 text-white overflow-hidden">
+            <!-- Background video element -->
+            <video class="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-20" autoplay muted loop playsinline>
+                <source src="https://t36651801.p.clickup-attachments.com/t36651801/85ed97d3-a625-4ee2-9d6f-7f9541dac822/turquoise-seascape-and-architecture-tamarama-beac-2024-03-11-18-21-44-utc.mp4?view=open" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="relative z-10 p-6 hero-content">
+                <!-- UPDATED: Added sm:text-4xl for better mobile scaling -->
+                <h1 class="font-serif-display text-3xl sm:text-4xl md:text-7xl font-bold mb-6 leading-tight hero-title">
+                    Digital Marketing <span class="text-gray-400">Agency</span>
+                </h1>
+                <!-- *** UPDATED: Shortened text *** -->
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-gray-300 hero-subtitle">
+                    We specialize in creating impactful digital marketing strategies that help businesses stand out and enhance their online presence.
+                </p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center hero-buttons">
+                    <a href="#process" class="bg-gray-600 text-white hover:bg-gray-700 font-bold py-4 px-8 rounded-lg transition duration-300">
+                        Learn More
+                    </a>
+                    <a href="#contact" class="border border-white text-white hover:bg-white hover:text-gray-900 font-bold py-4 px-8 rounded-lg transition duration-300">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tagline Section -->
+        <!-- UPDATED: Reduced vertical padding on mobile to py-16 -->
+        <section class="py-16 md:py-20 bg-gray-900">
+            <div class="container mx-auto px-6 text-center">
+                <!-- UPDATED: Added text-2xl sm:text-3xl for better mobile scaling -->
+                <h2 class="font-serif-display text-2xl sm:text-3xl md:text-5xl font-bold text-white leading-tight section-title">
+                    Let's bring your <span class="text-gray-400">brand</span><br> centre <span class="text-gray-400">stage.</span>
+                </h2>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-24 bg-gray-100 overflow-hidden">
+            <div class="container mx-auto px-6">
+                <h5 class="text-center text-gray-600 text-lg font-semibold uppercase tracking-wider mb-4 section-subtitle">Services</h5>
+                <!-- UPDATED: Added text-3xl sm:text-4xl for better mobile scaling -->
+                <h3 class="font-serif-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 text-center mb-16 section-title">What We Do</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Service 1: Content Creation -->
+                    <!-- UPDATED: Changed height to h-72 from h-80 md:h-72 -->
+                    <div class="service-card h-72" style="perspective: 1000px;">
+                        <div class="service-card-inner">
+                            <!-- Front -->
+                            <div class="service-card-front bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                                <svg class="w-16 h-16 text-gray-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg>
+                                <h4 class="text-2xl font-bold text-gray-900">Content Creation</h4>
+                            </div>
+                            <!-- Back -->
+                            <div class="service-card-back bg-gray-800 text-white rounded-xl shadow-lg p-6 flex flex-col justify-center">
+                                <h4 class="text-xl font-bold mb-3">Content Creation</h4>
+                                <p class="text-gray-300">We craft high-quality, visually appealing, and brand-aligned content that captures attention and tells your story.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 2: Social Media Marketing -->
+                    <!-- UPDATED: Changed height to h-72 from h-80 md:h-72 -->
+                    <div class="service-card h-72" style="perspective: 1000px;">
+                        <div class="service-card-inner">
+                            <!-- Front -->
+                            <div class="service-card-front bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                                <svg class="w-16 h-16 text-gray-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" /></svg>
+                                <h4 class="text-2xl font-bold text-gray-900">Social Media Marketing</h4>
+                            </div>
+                            <!-- Back -->
+                            <div class="service-card-back bg-gray-800 text-white rounded-xl shadow-lg p-6 flex flex-col justify-center">
+                                <h4 class="text-xl font-bold mb-3">Social Media Marketing</h4>
+                                <p class="text-gray-300">We strategize and manage your brand's social media presence to boost engagement and build a loyal community.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 3: Designing -->
+                    <!-- UPDATED: Changed height to h-72 from h-80 md:h-72 -->
+                    <div class="service-card h-72" style="perspective: 1000px;">
+                        <div class="service-card-inner">
+                            <!-- Front -->
+                            <div class="service-card-front bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                                <svg class="w-16 h-16 text-gray-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19 14.5M14.25 3.104c.251.023.501.05.75.082M19 14.5v-5.714c0-.597-.237-1.17-.659-1.591L14.25 3.104 9.75 3.104Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19 14.5M5 14.5h14v4.75a2.25 2.25 0 0 1-2.25 2.25h-9.5A2.25 2.25 0 0 1 5 19.25V14.5Z" /></svg>
+                                <h4 class="text-2xl font-bold text-gray-900">Designing</h4>
+                            </div>
+                            <!-- Back -->
+                            <div class="service-card-back bg-gray-800 text-white rounded-xl shadow-lg p-6 flex flex-col justify-center">
+                                <h4 class="text-xl font-bold mb-3">Designing</h4>
+                                <p class="text-gray-300">Logos, Brochures, Tent Cards, Business Cards, Flyers, Newsletters, Banners, and anything else you need.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 4: Ads Campaign -->
+                    <!-- UPDATED: Changed height to h-72 from h-80 md:h-72 -->
+                    <div class="service-card h-72" style="perspective: 1000px;">
+                        <div class="service-card-inner">
+                            <!-- Front -->
+                            <div class="service-card-front bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center">
+                                <svg class="w-16 h-16 text-gray-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" /></svg>
+                                <h4 class="text-2xl font-bold text-gray-900">Ads Campaign</h4>
+                            </div>
+                            <!-- Back -->
+                            <div class="service-card-back bg-gray-800 text-white rounded-xl shadow-lg p-6 flex flex-col justify-center">
+                                <h4 class="text-xl font-bold mb-3">Ads Campaign</h4>
+                                <p class="text-gray-300">We design and execute targeted ad campaigns across social and search platforms to maximize reach and drive traffic.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section id="process" class="py-24 bg-white overflow-hidden">
+            <div class="container mx-auto px-6">
+                <!-- UPDATED: Added text-3xl sm:text-4xl for better mobile scaling -->
+                <h2 class="font-serif-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 text-center mb-4 section-title">
+                    From <span class="text-gray-600">insights</span> to <span class="text-gray-600">impact.</span>
+                </h2>
+                <p class="text-xl text-gray-700 text-center mb-20 section-subtitle">How do we get there?</p>
+                
+                <!-- Process Step 1 -->
+                <div class="process-step flex flex-col md:flex-row items-center gap-12 mb-20">
+                    <div class="w-full md:w-1/2">
+                        <!-- UPDATED: Added text-2xl for better mobile scaling -->
+                        <h3 class="font-serif-display text-2xl md:text-3xl font-bold text-gray-900 mb-4">Content Strategy</h3>
+                        <!-- *** UPDATED: Shortened text *** -->
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            We analyze industry trends and competitor research to find insights that help you outperform your competition and drive growth.
+                        </p>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <!-- *** UPDATED: Removed image, added placeholder *** -->
+                        <div class="w-full h-64 md:h-80 bg-gray-200 rounded-lg shadow-xl flex items-center justify-center">
+                            <span class="text-gray-500">Content Strategy Placeholder</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Process Step 2 -->
+                <div class="process-step flex flex-col md:flex-row-reverse items-center gap-12 mb-20">
+                    <div class="w-full md:w-1/2">
+                        <!-- UPDATED: Added text-2xl for better mobile scaling -->
+                        <h3 class="font-serif-display text-2xl md:text-3xl font-bold text-gray-900 mb-4">Social Media Plan</h3>
+                        <!-- *** UPDATED: Shortened text *** -->
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Our 12-month strategy blends foresight with precision. We align forecasting and KPIs to shape your growth journey.
+                        </p>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <!-- *** UPDATED: Removed image, added placeholder *** -->
+                        <div class="w-full h-64 md:h-80 bg-gray-200 rounded-lg shadow-xl flex items-center justify-center">
+                            <span class="text-gray-500">Social Media Plan Placeholder</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Process Step 3 -->
+                <div class="process-step flex flex-col md:flex-row items-center gap-12">
+                    <div class="w-full md:w-1/2">
+                        <!-- UPDATED: Added text-2xl for better mobile scaling -->
+                        <h3 class="font-serif-display text-2xl md:text-3xl font-bold text-gray-900 mb-4">Campaign Execution</h3>
+                        <!-- *** UPDATED: Shortened text *** -->
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            We craft a digital presence that commands attention by blending cutting-edge web design with strategic search positioning.
+                        </p>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <!-- *** UPDATED: Removed image, added placeholder *** -->
+                        <div class="w-full h-64 md:h-80 bg-gray-200 rounded-lg shadow-xl flex items-center justify-center">
+                            <span class="text-gray-500">Campaign Execution Placeholder</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- UPDATED: Portfolio Section -->
+        <section id="portfolio" class="py-24 bg-gray-100 overflow-hidden">
+            <div class="container mx-auto px-6">
+                <h5 class="text-center text-gray-600 text-lg font-semibold uppercase tracking-wider mb-4 section-subtitle">Our Work</h5>
+                <!-- UPDATED: Added text-3xl sm:text-4xl for better mobile scaling -->
+                <h3 class="font-serif-display text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 text-center mb-16 section-title">Portfolio</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Portfolio Item 1 -->
+                    <!-- *** UPDATED: Removed background image *** -->
+                    <a href="#" class="portfolio-card block bg-gray-300 rounded-lg shadow-lg overflow-hidden relative h-72">
+                        <div class="portfolio-card-bg absolute inset-0 bg-black opacity-10"></div>
+                        <div class="portfolio-card-content relative h-full flex items-center justify-center p-6">
+                            <!-- UPDATED: Added text-2xl for better mobile scaling -->
+                            <h4 class="text-2xl md:text-3xl font-bold text-gray-700 text-center opacity-80">Restaurants</h4>
+                        </div>
+                    </a>
+                    <!-- Portfolio Item 2 -->
+                    <!-- *** UPDATED: Removed background image *** -->
+                    <a href="#" class="portfolio-card block bg-gray-300 rounded-lg shadow-lg overflow-hidden relative h-72">
+                        <div class="portfolio-card-bg absolute inset-0 bg-black opacity-10"></div>
+                        <div class="portfolio-card-content relative h-full flex items-center justify-center p-6">
+                            <!-- UPDATED: Added text-2xl for better mobile scaling -->
+                            <h4 class="text-2xl md:text-3xl font-bold text-gray-700 text-center opacity-80">Clothing</h4>
+                        </div>
+                    </a>
+                    <!-- Portfolio Item 3 -->
+                    <!-- *** UPDATED: Removed background image *** -->
+                    <a href="#" class="portfolio-card block bg-gray-300 rounded-lg shadow-lg overflow-hidden relative h-72">
+                        <div class="portfolio-card-bg absolute inset-0 bg-black opacity-10"></div>
+                        <div class="portfolio-card-content relative h-full flex items-center justify-center p-6">
+                            <!-- UPDATED: Added text-2xl for better mobile scaling -->
+                            <h4 class="text-2xl md:text-3xl font-bold text-gray-700 text-center opacity-80">Coaching Centres</h4>
+                        </div>
+                    </a>
+                    <!-- Portfolio Item 4 -->
+                    <!-- *** UPDATED: Removed background image *** -->
+                    <a href="#" class="portfolio-card block bg-gray-300 rounded-lg shadow-lg overflow-hidden relative h-72">
+                        <div class="portfolio-card-bg absolute inset-0 bg-black opacity-10"></div>
+                        <div class="portfolio-card-content relative h-full flex items-center justify-center p-6">
+                            <!-- UPDATED: Added text-2xl for better mobile scaling -->
+                            <h4 class="text-2xl md:text-3xl font-bold text-gray-700 text-center opacity-80">Interior Designing</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-white overflow-hidden">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <h5 class="text-gray-600 text-lg font-semibold uppercase tracking-wider mb-4 section-subtitle">Connect with us</h5>
+                <!-- UPDATED: Added text-3xl sm:text-4xl for better mobile scaling -->
+                <h2 class="font-serif-display text-3xl sm:text-4xl md:text-6xl font-bold text-gray-900 mb-6 section-title">let's bring your vision to life.</h2>
+                <!-- *** UPDATED: Shortened text *** -->
+                <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-12 section-subtitle">
+                    Book a quick chat to explore how we can elevate your marketing. Whether you have questions or are ready to start, we're here to help.
+                </p>
+                
+                <!-- UPDATED: Reduced mobile padding from p-8 to p-6 sm:p-8 -->
+                <div class="contact-form-container max-w-2xl mx-auto bg-gray-50 p-6 sm:p-8 md:p-12 rounded-xl shadow-lg text-left">
+                    <form id="contact-form" action="#" method="POST">
+                        <div id="form-content">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <!-- Full Name -->
+                                <div>
+                                    <label for="full-name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                    <input type="text" name="full-name" id="full-name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" placeholder="John Doe">
+                                </div>
+                                <!-- Email Address -->
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                    <input type="email" name="email" id="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" placeholder="you@example.com">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <!-- Phone Number (Optional) -->
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone <span class="text-gray-500">(Optional)</span></label>
+                                    <input type="tel" name="phone" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" placeholder="+1 (555) 123-4567">
+                                </div>
+                                <!-- UPDATED: Services in dropdown -->
+                                <div>
+                                    <label for="service" class="block text-sm font-medium text-gray-700 mb-2">Service Interested In</label>
+                                    <select id="service" name="service" class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent bg-white">
+                                        <option>Please select</option>
+                                        <option>Content Creation</option>
+                                        <option>Social Media Marketing</option>
+                                        <option>Designing</option>
+                                        <option>Ads Campaign</option>
+                                        <option>Other / Not Sure</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Message -->
+                            <div class="mb-6">
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea id="message" name="message" rows="4" required class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-600 focus:border-transparent" placeholder="Tell us a bit about your project..."></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div>
+                                <button type="submit" class="w-full bg-gray-600 text-white hover:bg-gray-700 font-bold py-4 px-8 rounded-lg transition duration-300 focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2">
+                                    Send Message
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Thank You Message (Hidden by default) -->
+                        <div id="thank-you-message" class="hidden text-center">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Thank You!</h3>
+                            <p class="text-lg text-gray-700">Your message has been sent. We'll be in touch soon.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Footer Column 1: Logo & Desc -->
+                <div>
+                    <!-- Logo -->
+                    <a href="#" class="flex items-center gap-3 text-white mb-4">
+                        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M12 2.76C12.94 4.14 13.79 5.62 14.38 7.31C15.02 9.11 15.3 11.06 15.18 13.06C14.95 15.21 14.1 17.2 12.8 18.74C12.57 19.01 12.29 19.26 12 19.5C11.71 19.26 11.43 19.01 11.2 18.74C9.9 17.2 9.05 15.21 8.82 13.06C8.7 11.06 8.98 9.11 9.62 7.31C10.21 5.62 11.06 4.14 12 2.76M12 1C9.6 3.69 8.22 7.21 8.02 11.06C7.81 15.14 9.07 19.06 11.4 21.72C11.58 21.92 11.79 22.1 12 22.28C12.21 22.1 12.42 21.92 12.6 21.72C14.93 19.06 16.19 15.14 15.98 11.06C15.78 7.21 14.4 3.69 12 1Z" fill="white"/>
+                           <path d="M4.31 10.22C6.08 10.9 7.6 12.06 8.7 13.56C8.89 13.82 9.07 14.07 9.25 14.31C8.3 15.35 7.1 16.14 5.76 16.57C3.99 17.03 2.11 17.06 0.34 16.65C0.11 16.6 -0.01 16.34 0 16.1C0.21 14.28 1.13 12.58 2.58 11.3C3.07 10.86 3.65 10.5 4.31 10.22Z" fill="white"/>
+                           <path d="M19.69 10.22C17.92 10.9 16.4 12.06 15.3 13.56C15.11 13.82 14.93 14.07 14.75 14.31C15.7 15.35 16.9 16.14 18.24 16.57C20.01 17.03 21.89 17.06 23.66 16.65C23.89 16.6 24.01 16.34 24 16.1C23.79 14.28 22.87 12.58 21.42 11.3C20.93 10.86 20.35 10.5 19.69 10.22Z" fill="white"/>
+                        </svg>
+                        <span class="logo-text text-white text-3xl">GENESIS</span>
+                    </a>
+                    <!-- *** UPDATED: Shortened text *** -->
+                    <p class="max-w-xs mb-6">
+                        We create impactful digital marketing strategies that help businesses stand out.
+                    </p>
+                    
+                    <!-- *** UPDATED: Added social icons *** -->
+                    <div class="flex space-x-4">
+                        <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2.065a.75.75 0 0 1 .63.03l.08.046a11.96 11.96 0 0 1 5.378 2.417c1.614.97 2.67 2.38 3.12 4.14.45 1.76.33 3.63-.33 5.31a11.96 11.96 0 0 1-2.417 5.378c-.97 1.614-2.38 2.67-4.14 3.12-1.76.45-3.63.33-5.31-.33a11.96 11.96 0 0 1-5.378-2.417c-1.614-.97-2.67-2.38-3.12-4.14-.45-1.76-.33-3.63.33-5.31a11.96 11.96 0 0 1 2.417-5.378c.97-1.614 2.38-2.67 4.14-3.12 1.76-.45 3.55-.57 5.235-.318l.08.017a.75.75 0 0 1 .046.63l-.017.08a.75.75 0 0 1-.63-.046l-.08-.017a10.463 10.463 0 0 0-4.57.278c-1.38.36-2.5 1.2-3.21 2.4a10.463 10.463 0 0 0-2.4 4.57c-.36 1.38-0.3 2.8.18 4.16.48 1.36 1.4 2.48 2.6 3.21s2.61.9 4.02.63a10.463 10.463 0 0 0 4.57-2.4c1.38-.97 2.3-2.3 2.68-3.85.38-1.55.3-3.15-.22-4.66a10.463 10.463 0 0 0-2.4-4.57c-.97-1.38-2.3-2.3-3.85-2.68a10.463 10.463 0 0 0-4.66-.22Zm3.47.535a.75.75 0 0 1 .12.01l.08.017c1.62.33 3.06.9 4.3 1.88 1.24.98 2.2 2.2 2.8 3.6.6 1.4.83 2.9.68 4.4a8.966 8.966 0 0 1-1.88 4.3c-.98 1.24-2.2 2.2-3.6 2.8-1.4.6-2.9.83-4.4.68a8.966 8.966 0 0 1-4.3-1.88c-1.24-.98-2.2-2.2-2.8-3.6-.6-1.4-.83-2.9-.68-4.4a8.966 8.966 0 0 1 1.88-4.3c.98-1.24 2.2-2.2 3.6-2.8 1.4-.6 2.9-.83 4.4-.68l.08.01a.75.75 0 0 1 .01.12l-.01-.08Zm-3.47 2.4a.75.75 0 0 1 .75.75c0 2.21 1.79 4 4 4s4-1.79 4-4-1.79-4-4-4-4 1.79-4 4a.75.75 0 0 1-.75.75.75.75 0 0 1-.75-.75c0-3.71 3.04-6.75 6.75-6.75s6.75 3.04 6.75 6.75-3.04 6.75-6.75 6.75-6.75-3.04-6.75-6.75a.75.75 0 0 1 .75-.75Zm6.9-2.1a.75.75 0 0 1 0 1.5.75.75 0 0 1 0-1.5Z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12Z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM9 12V9H7v9h2v-5a1 1 0 0 1 1-1h.5a2.5 2.5 0 0 1 2.5 2.5V18h2v-5.5a4.5 4.5 0 0 0-4.5-4.5H10a1 1 0 0 1-1 1ZM7 7h2v1H7V7Z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer Column 2: Quick Links -->
+                <div>
+                    <h5 class="text-xl font-bold text-white mb-6">Quick Links</h5>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#services" class="hover:text-white transition duration-300">Services</a></li>
+                        <li><a href="#portfolio" class="hover:text-white transition duration-300">Portfolio</a></li>
+                        <li><a href="#process" class="hover:text-white transition duration-300">Our Process</a></li>
+                        <li><a href="#contact" class="hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Footer Column 3: Contact -->
+                <div>
+                    <h5 class="text-xl font-bold text-white mb-6">Contact</h5>
+                    <ul class="space-y-4">
+                        <li>
+                            <h6 class="font-semibold text-gray-200">Phone</h6>
+                            <a href="tel:+919930394480" class="block hover:text-white transition duration-300">+91 9930394480</a>
+                            <a href="tel:+919833610115" class="block hover:text-white transition duration-300">+91 9833610115</a>
+                        </li>
+                        <li>
+                            <h6 class="font-semibold text-gray-200">Email</h6>
+                            <a href="mailto:marketingwithgenesis01@gmail.com" class="hover:text-white transition duration-300">marketingwithgenesis01@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="mt-16 pt-8 border-t border-gray-800 text-center">
+                <p>&copy; 2025 Genesis Marketing. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- Mobile Menu Animation ---
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-menu-link');
+            
+            // Set initial state
+            gsap.set(mobileMenu, { y: '-100%', display: 'none' });
+            
+            let isMenuOpen = false;
+            
+            const menuTimeline = gsap.timeline({ paused: true, reversed: true })
+                .to(mobileMenu, { 
+                    display: 'block', 
+                    y: '0%', 
+                    duration: 0.5, 
+                    ease: 'power3.out' 
+                })
+                 // *** FIX: Use fromTo for reliable link animation ***
+                .fromTo(mobileLinks, 
+                    { y: 20, opacity: 0 }, // From
+                    { y: 0, opacity: 1, stagger: 0.05, duration: 0.3, ease: 'power2.out' } // To
+                , "-=0.2");
+
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    menuTimeline.play();
+                    // UPDATED: Force button color to dark when menu is open
+                    gsap.to(mobileMenuBtn, { color: '#1f2937', duration: 0.3 }); 
+                } else {
+                    menuTimeline.reverse();
+                    // UPDATED: On close, revert to color based on scroll position
+                    const targetColor = window.scrollY > 50 ? '#1f2937' : '#FFFFFF';
+                    gsap.to(mobileMenuBtn, { color: targetColor, duration: 0.3 });
+                }
+            });
+
+            // Close menu when a link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    menuTimeline.reverse();
+                    // UPDATED: On close, revert to color based on scroll position
+                    const targetColor = window.scrollY > 50 ? '#1f2937' : '#FFFFFF';
+                    gsap.to(mobileMenuBtn, { color: targetColor, duration: 0.3 });
+                });
+            });
+
+
+            // --- Header Scroll Animation ---
+            const header = document.getElementById('header');
+            const headerBg = document.getElementById('header-bg');
+            const logoWhite = document.getElementById('logo-white');
+            const logoDark = document.getElementById('logo-dark');
+            const navLinks = document.querySelectorAll('#nav-links a');
+            const contactBtn = document.getElementById('nav-contact-btn');
+            // const mobileMenuBtn = document.getElementById('mobile-menu-btn'); // Already declared above
+
+            ScrollTrigger.create({
+                trigger: 'body',
+                start: 'top top', // Start at the very top
+                end: '+=50',      // End after scrolling 50px
+                toggleActions: 'play none none reverse', // Play on scroll down, reverse on scroll up
+                onEnter: () => { // Scrolled down
+                    gsap.to(headerBg, { opacity: 1, duration: 0.3 });
+                    gsap.to(logoWhite, { opacity: 0, duration: 0.3 });
+                    gsap.to(logoDark, { opacity: 1, duration: 0.3 });
+                    gsap.to(navLinks, { color: '#374151', duration: 0.3 }); // text-gray-700
+                    gsap.to(contactBtn, { 
+                        color: '#4B5563', // text-gray-600
+                        borderColor: '#4B5563', // border-gray-600
+                        backgroundColor: 'rgba(255, 255, 255, 0)', // bg-transparent
+                        duration: 0.3 
+                    });
+                    // Only change menu btn color if menu is NOT open
+                    if (!isMenuOpen) {
+                        gsap.to(mobileMenuBtn, { color: '#1f2937', duration: 0.3 }); // text-gray-900
+                    }
+                },
+                onLeaveBack: () => { // Scrolled back to top
+                    gsap.to(headerBg, { opacity: 0, duration: 0.3 });
+                    gsap.to(logoWhite, { opacity: 1, duration: 0.3 });
+                    gsap.to(logoDark, { opacity: 0, duration: 0.3 });
+                    gsap.to(navLinks, { color: '#D1D5DB', duration: 0.3 }); // text-gray-300
+                    gsap.to(contactBtn, { 
+                        color: '#FFFFFF', // text-white
+                        borderColor: '#FFFFFF', // border-white
+                        backgroundColor: '#1F2937', // bg-gray-800
+                        duration: 0.3 
+                    });
+                    // Only change menu btn color if menu is NOT open
+                    if (!isMenuOpen) {
+                        gsap.to(mobileMenuBtn, { color: '#FFFFFF', duration: 0.3 }); // text-white
+                    }
+                }
+            });
+
+            // --- Service Card Flip Animation ---
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                const cardInner = card.querySelector('.service-card-inner');
+                gsap.set(cardInner, { rotationY: 0 }); // Ensure initial state
+
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(cardInner, {
+                        rotationY: 180,
+                        duration: 0.7,
+                        ease: 'power3.inOut'
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(cardInner, {
+                        rotationY: 0,
+                        duration: 0.7,
+                        ease: 'power3.inOut'
+                    });
+                });
+            });
+
+            // --- Portfolio Card Hover Animation ---
+            const portfolioCards = document.querySelectorAll('.portfolio-card');
+            portfolioCards.forEach(card => {
+                const bg = card.querySelector('.portfolio-card-bg');
+                const content = card.querySelector('.portfolio-card-content');
+                const title = content.querySelector('h4');
+
+                const hoverTimeline = gsap.timeline({ paused: true })
+                    .to(card, { scale: 1.05, duration: 0.3, ease: 'power1.out' })
+                    .to(bg, { opacity: 0.2, duration: 0.3, ease: 'power1.out' }, 0)
+                    .to(title, { opacity: 1, duration: 0.3, ease: 'power1.out' }, 0);
+                
+                card.addEventListener('mouseenter', () => {
+                    hoverTimeline.play();
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    hoverTimeline.reverse();
+                });
+            });
+
+            // --- Page Load & Scroll Animations ---
+
+            // Hero Content
+            gsap.from('.hero-title', { duration: 0.8, y: 30, opacity: 0, ease: 'power3.out', delay: 0.2 });
+            gsap.from('.hero-subtitle', { duration: 0.8, y: 30, opacity: 0, ease: 'power3.out', delay: 0.4 });
+            gsap.from('.hero-buttons', { duration: 0.8, y: 30, opacity: 0, ease: 'power3.out', delay: 0.6 });
+
+            // Stagger animations for sections
+            const animateUp = (selector) => {
+                gsap.from(selector, {
+                    scrollTrigger: {
+                        trigger: selector,
+                        start: 'top 85%', // When the top of the element hits 85% of the viewport height
+                        toggleActions: 'play none none none',
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: 'power3.out',
+                    stagger: 0.15
+                });
+            };
+
+            animateUp('.section-title');
+            animateUp('.section-subtitle');
+            animateUp('.service-card');
+            animateUp('.process-step');
+            animateUp('.portfolio-card');
+            animateUp('.contact-form-container');
+
+
+            // --- Form Submission ---
+            const contactForm = document.getElementById('contact-form');
+            const formContent = document.getElementById('form-content');
+            const thankYouMessage = document.getElementById('thank-you-message');
+
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault(); 
+                gsap.to(formContent, {
+                    opacity: 0, 
+                    duration: 0.5, 
+                    onComplete: () => {
+                        formContent.classList.add('hidden');
+                        thankYouMessage.classList.remove('hidden');
+                        gsap.fromTo(thankYouMessage, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
